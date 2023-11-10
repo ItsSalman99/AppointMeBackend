@@ -7,6 +7,8 @@ use App\Http\Controllers\Provider\SettingsController;
 use App\Http\Controllers\Provider\ServiceController;
 use App\Http\Controllers\Provider\BookingController;
 use App\Http\Controllers\Provider\AccountSettingController;
+use App\Http\Controllers\Provider\ClientController;
+use App\Http\Controllers\Provider\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,14 +32,20 @@ Route::post('/user/register', [AuthController::class , 'registerStore'])->name('
 
 // Dashboard
 Route::get('/dashboard', [DashboardController::class , 'index'])->name('dashboard');
+Route::get('/dashboard/schedule', [ScheduleController::class , 'index'])->name('dashboard.schedule');
+Route::post('/dashboard/updateScheduleDays', [ScheduleController::class , 'updateScheduleDays'])->name('dashboard.settings.updateScheduleDays');
+
 Route::get('/dashboard/calendar', [DashboardController::class , 'calendar'])->name('dashboard.calendar');
-Route::get('/dashboard/clients', [DashboardController::class , 'clients'])->name('dashboard.clients');
 Route::get('/dashboard/inbox', [DashboardController::class , 'inbox'])->name('dashboard.inbox');
 
+Route::get('/dashboard/clients', [ClientController::class , 'index'])->name('dashboard.clients');
+
 Route::get('/dashboard/bookings', [BookingController::class , 'index'])->name('dashboard.bookings.index');
+Route::get('/dashboard/bookings/scheduled/{id}', [BookingController::class , 'scheduleBooking'])->name('dashboard.bookings.scheduled');
 
 Route::get('/dashboard/settigs/services', [ServiceController::class , 'index'])->name('dashboard.settings.services');
 Route::post('/dashboard/settigs/services/store', [ServiceController::class , 'store'])->name('dashboard.settings.services.store');
+Route::post('/dashboard/settigs/services/update', [ServiceController::class , 'update'])->name('dashboard.settings.services.update');
 Route::get('/dashboard/settigs/services/delete/{id}', [ServiceController::class , 'delete'])->name('dashboard.settings.services.delete');
 
 Route::get('/dashboard/settigs/business-details', [SettingsController::class , 'businessDetails'])->name('dashboard.settings.business-details');
@@ -48,7 +56,6 @@ Route::get('/dashboard/settigs/availability', [SettingsController::class , 'avai
 Route::get('/dashboard/settigs/payments', [SettingsController::class , 'payments'])->name('dashboard.settings.payments');
 
 Route::get('/dashboard/account-settings', [AccountSettingController::class , 'accountSettings'])->name('dashboard.settings.accountSettings');
-Route::post('/dashboard/updateScheduleDays', [AccountSettingController::class , 'updateScheduleDays'])->name('dashboard.settings.updateScheduleDays');
 
 //ajax
 Route::get('/register/getSubSectors/{id}', [AuthController::class , 'getSubSectors'])->name('getSubSectors');

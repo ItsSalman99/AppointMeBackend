@@ -8,15 +8,16 @@ if(!function_exists('checkSchedule'))
     {
         $check = ProviderSchedule::where('user_id', auth()->user()->id)
         ->where('name', $day)->first();
-        
+
         if($check)
         {
-            return true;
+            return $check;
         }
         else{
-            return false;
+            return null;
         }
-        
-        
+
+
     }
 }
+

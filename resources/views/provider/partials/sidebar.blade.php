@@ -33,6 +33,11 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-grid-1x2-fill font-20px"></i></div>
                                 Dashboard
                             </a>
+                            <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'calendar.php') !== false) echo 'active'; ?>"
+                                href="{{ route('dashboard.schedule') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-calendar font-20px"></i></div>
+                                My Schedule
+                            </a>
                             <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'calendar.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.calendar') }}">
                                 <div class="sb-nav-link-icon"><i class="bi bi-calendar-check font-20px"></i></div>
                                 Calendar
@@ -41,14 +46,14 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-people-fill font-20px"></i></div>
                                 Clients
                             </a>
-                            <a class="nav-link 
+                            <a class="nav-link
                             <?php if (strpos($_SERVER['REQUEST_URI'], 'inbox.php') !== false || strpos($_SERVER['REQUEST_URI'], 'booking-requests.php') !== false || strpos($_SERVER['REQUEST_URI'], 'chat.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.inbox') }}">
                                 <div class="sb-nav-link-icon"><i class="bi bi-inbox font-20px"></i></div>
                                 Inbox
                             </a>
 
-                            <a class="nav-link collapsed 
-                            <?php if ((strpos($_SERVER['REQUEST_URI'], 'business-details.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'services.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'location.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'availability.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'payments.php') !== false)) echo 'active'; ?> sidenav-active" 
+                            <a class="nav-link collapsed
+                            <?php if ((strpos($_SERVER['REQUEST_URI'], 'business-details.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'services.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'location.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'availability.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'payments.php') !== false)) echo 'active'; ?> sidenav-active"
                             href="#" data-bs-toggle="collapse" data-bs-target="#NewsLetter" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="bi bi-gear-fill font-20px"></i></div>
                                 Settings
@@ -96,7 +101,7 @@
                             <a class="nav-link <?php if(strpos($_SERVER['REQUEST_URI'], 'subscription.php') !== false) echo 'active'; ?>" href="subscription.php">
                                 <div class="sb-nav-link-icon"><i class="bi bi-bookmark-star-fill font-20px"></i></div>
                                 Subscription
-                            </a> 
+                            </a>
 
 
 

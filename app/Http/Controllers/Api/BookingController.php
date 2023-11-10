@@ -34,7 +34,7 @@ class BookingController extends Controller
             ]);
         }
     }
-    
+
     public function getByDate($date)
     {
         $token = request()->bearerToken();
@@ -60,7 +60,7 @@ class BookingController extends Controller
             ]);
         }
     }
-    
+
     public function getDetails($id)
     {
         $token = request()->bearerToken();
@@ -68,7 +68,7 @@ class BookingController extends Controller
         $user = User::where('token', $token)->where('user_role', 'customer')->first();
 
         if ($user) {
-            
+
             // return $parseDate;
             $bookings= ServiceBooking::where('user_id', $user->id)
             ->where('id',$id)
@@ -85,7 +85,7 @@ class BookingController extends Controller
             ]);
         }
     }
-    
+
     public function cancelBooking(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -104,26 +104,76 @@ class BookingController extends Controller
         $user = User::where('token', $token)->where('user_role', 'customer')->first();
 
         if ($user) {
-            
+
             // return $parseDate;
             $booking= ServiceBooking::where('user_id', $user->id)
             ->where('id',$request->booking_id)
             ->with('user', 'provider', 'service', 'service_type.service_type')->first();
-            
+
             if($booking)
             {
-                $booking->status = 'Cancelled';
+                $booking->status = 'cancelled';
                 $booking->cancel_reason = $request->cancel_reason;
                 $booking->save();
-                
+
                 return response()->json([
                     'status' =>  true,
                     'data' => $booking
                 ]);
-                
+
             }
             else{
-                
+
+                return response()->json([
+                    'status' =>  false,
+                    'msg' => 'Not found!'
+                ]);
+            }
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'msg' => 'unauthenticated!'
+            ]);
+        }
+    }
+
+    public function completeBooking(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'booking_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'msg' => $validator->errors()->first()
+            ]);
+        }
+        $token = request()->bearerToken();
+
+        $user = User::where('token', $token)->where('user_role', 'customer')->first();
+
+        if ($user) {
+
+            // return $parseDate;
+            $booking= ServiceBooking::where('user_id', $user->id)
+            ->where('id',$request->booking_id)
+            ->with('user', 'provider', 'service', 'service_type.service_type')->first();
+
+            if($booking)
+            {
+                $booking->status = 'completed';
+                $booking->save();
+
+                return response()->json([
+                    'status' =>  true,
+                    'data' => $booking
+                ]);
+
+            }
+            else{
+
                 return response()->json([
                     'status' =>  false,
                     'msg' => 'Not found!'
