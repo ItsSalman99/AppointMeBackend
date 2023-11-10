@@ -1,0 +1,30 @@
+// 1
+.tabs-style-1 {
+  .tabs-links {
+    ul {
+      gap: 5px;
+      li {
+        flex: 1;
+        button {
+          color: #3a3a3a;
+          font-size: 14px;
+          padding: 6px 11px;
+          justify-content: center;
+          width: 100%;
+          white-space: nowrap;
+          &:not(.active):hover {
+            color: var(--bs-primary);
+          }
+          &.active {
+            background: rgb(var(--bs-primary-rgb), 0.1) !important;
+            color: var(--bs-primary);
+          }
+        }
+      }
+    }
+  }
+  .tab-content {
+    margin-top: 20px;
+    padding: 20px;
+  }
+}

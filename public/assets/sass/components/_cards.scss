@@ -1,0 +1,55 @@
+// ################## START CARD AREA  ######################
+.cover-all-content {
+  padding: clamp(15px, 5vw, 32px);
+  padding-top: 2rem;
+}
+.cover-inner-content {
+  margin-top: 2em;
+}
+
+.card {
+  --bs-card-spacer-y: 1.5rem;
+  --bs-card-spacer-x: 1.5rem;
+  --bs-card-border-radius: 10px;
+  --bs-card-border-width: 1px;
+  --bs-card-border-color: var(--bs-border-color);
+  box-shadow: 0 4px 16px 0 rgb(169 184 200 / 15%);
+  height: calc(100% - 20px);
+  margin-bottom: 1.5rem;
+}
+
+.card-title {
+  color: var(--bs-dark);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+// dashbarod
+.dash {
+  &::before {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 46px;
+    border-bottom-right-radius: 11px;
+    border-top-right-radius: 6px;
+    top: 10%;
+    right: 30%;
+    background: rgba(255, 255, 255, 0.135);
+    transform: rotate(35deg);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 48px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 3px;
+    top: -4%;
+    right: 50%;
+    background: rgba(255, 255, 255, 0.135);
+    transform: rotate(35deg);
+  }
+}
+
+// ################## END CARD AREA  ######################

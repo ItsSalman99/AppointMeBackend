@@ -1,0 +1,46 @@
+#dunotchart {
+  .apexcharts-legend {
+    top: 50% !important;
+    transform: translateY(-50%);
+    height: max-content;
+    .apexcharts-legend-series {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .apexcharts-legend-marker {
+        width: 18px !important;
+        height: 18px !important;
+        border-radius: 0px !important;
+      }
+      .apexcharts-legend-text {
+        font-family: inherit !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      &:not(:last-child) {
+        margin-bottom: 10px !important;
+      }
+    }
+  }
+}
+
+// #revenuChart {
+//   svg {
+//     overflow: inherit;
+//     foreignObject {
+//       overflow: inherit !important;
+//     }
+//   }
+//   .apexcharts-legend-series {
+//     padding: 5px 14px;
+//     border: 1px solid var(--bs-gray-300);
+//     border-radius: 5px;
+//     .apexcharts-legend-marker {
+//       margin-right: 8px;
+//     }
+//   }
+// }

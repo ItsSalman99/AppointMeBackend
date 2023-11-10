@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\DoctorService;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +16,7 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        if(DoctorService::count() == 0)
+        if(Service::count() == 0)
         {
 
             $user = User::create([
@@ -27,7 +27,7 @@ class ServiceSeeder extends Seeder
                 'user_role' => 'doctor'
             ]);
 
-            DoctorService::create([
+            Service::create([
                 'user_id' => $user->id,
                 'name' => 'Service 1',
                 'duration' => '30',
@@ -42,7 +42,7 @@ class ServiceSeeder extends Seeder
                 'user_role' => 'doctor'
             ]);
 
-            DoctorService::create([
+            Service::create([
                 'user_id' => $user2->id,
                 'name' => 'Service 2',
                 'duration' => '20',

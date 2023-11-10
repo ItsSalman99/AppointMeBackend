@@ -1,0 +1,110 @@
+%status {
+  background: #eeeeee;
+  color: #8c8c8c;
+  margin: 0;
+  padding: 5px 12px;
+  font-size: 13px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.pending-status,
+.draft-status,
+.notactive-status {
+  // width: 95px;
+  display: inline-block;
+  p {
+    @extend %status;
+  }
+}
+
+.feature-status,
+.pendingapproval-status {
+  display: inline-block;
+  p {
+    @extend %status;
+    background: rgb(234, 183, 0, 0.2);
+    color: #eab700;
+  }
+}
+
+.active-status,
+.paid-status,
+.published-status,
+.contacted-status,
+.success-status,
+.compeleted-status,
+.delivery-status {
+  // width: 95px;
+  display: inline-block;
+  p {
+    @extend %status;
+    background: rgb(49, 148, 100, 0.2);
+    color: #319464;
+  }
+}
+.accepted-status {
+  display: inline-block;
+  p {
+    @extend %status;
+    background: rgb(0, 200, 189, 0.2);
+    color: #00c8bd;
+  }
+}
+.deactive-status,
+.block-status,
+.rejected-status,
+.cancelled-status {
+  display: inline-block;
+  p {
+    @extend %status;
+    background: rgb(226, 0, 0, 0.2);
+    color: #e20000;
+  }
+}
+
+.draft-status {
+  display: inline-block;
+  p {
+    @extend %status;
+    background: #eeeeee;
+    color: #959995;
+  }
+}
+
+.off-status {
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: var(--primary-clr);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  p {
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    margin: 0;
+    line-height: normal;
+  }
+}
+
+.Tpending-status,
+.Tdraft-status {
+  color: #6c757d;
+}
+
+.Tprocessing-status,
+.Tcancel-status,
+.Tunpaid-status,
+.Tunsuccess-status {
+  color: #fb6131;
+}
+
+.Tdelivered-status,
+.Tactive-status,
+.Tstock-status,
+.Tpaid-status,
+.Tsuccess-status {
+  color: #589d00;
+}
