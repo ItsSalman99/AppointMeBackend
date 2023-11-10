@@ -9,7 +9,7 @@ Route::prefix('admin')->group(function () {
     //Auth Routes
     Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('admin.authenticate');
-    Route::get('/logout', [AuthController::class, 'logilogout'])->name('admin.logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('admin.logout');
     //Auth Routes End
 
 
