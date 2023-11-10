@@ -41,11 +41,8 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-people-fill font-20px"></i></div>
                                 Clients
                             </a>
-                            <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'clients.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.bookings.index') }}">
-                                <div class="sb-nav-link-icon"><i class="bi bi-people-fill font-20px"></i></div>
-                                Appointments
-                            </a>
-                            <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'inbox.php') !== false || strpos($_SERVER['REQUEST_URI'], 'booking-requests.php') !== false || strpos($_SERVER['REQUEST_URI'], 'chat.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.inbox') }}">
+                            <a class="nav-link 
+                            <?php if (strpos($_SERVER['REQUEST_URI'], 'inbox.php') !== false || strpos($_SERVER['REQUEST_URI'], 'booking-requests.php') !== false || strpos($_SERVER['REQUEST_URI'], 'chat.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.inbox') }}">
                                 <div class="sb-nav-link-icon"><i class="bi bi-inbox font-20px"></i></div>
                                 Inbox
                             </a>

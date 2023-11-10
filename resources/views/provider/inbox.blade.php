@@ -15,8 +15,8 @@
 </div>
 <div class="d-flex" style="height: 954px; bottom: 0;">
     <div class="p-2" style="width: 20%; height: 100%; border: 1px solid #eee;">
-        <a href="inbox.php" class="btn w-100 my-2" style="background-color: #E1F7FF; color: #04AEEC;"><i class="bi bi-envelope"></i>Messages</a>
-        <a href="booking-requests.php" class="btn w-100 my-2" style="background-color: #eee;"><i class="bi bi-card-list"></i>Booking Requests</a>
+        <a href="{{ route('dashboard.inbox') }}" class="btn w-100 my-2" style="background-color: #E1F7FF; color: #04AEEC;"><i class="bi bi-envelope"></i>Messages</a>
+        <a href="{{ route('dashboard.bookings.index') }}" class="btn w-100 my-2" style="background-color: #eee;"><i class="bi bi-card-list"></i>Booking Requests</a>
     </div>
     <div class="p-2" style="width: 80%; border: 1px solid #eee;">
 
