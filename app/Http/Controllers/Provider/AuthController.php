@@ -18,19 +18,19 @@ class AuthController extends Controller
     {
         $this->guard = "web"; // add
     }
-    
+
     public function login()
     {
         return view('auth.login');
     }
-    
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required'
         ]);
-        
+
         if($validator->fails())
         {
             return response()->json([
@@ -38,9 +38,9 @@ class AuthController extends Controller
                 'msg' => $validator->errors()->first()
             ]);
         }
-        
+
         $user = User::where('email', $request->email)->where('user_role', 'provider')->first();
-        
+
         if($user && $user->user_role == 'provider')
         {
             if(Hash::check($request->password, $user->password))
@@ -49,19 +49,19 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => $request->password,
                 ];
-                
-                
-                
+
+
+
                 $auth = auth()->attempt($credentials);
                 // dd($auth);
-                
+
                 if($auth)
                 {
                     return response()->json([
                         'status' => true,
                         'msg' => 'Logged in successful!'
                     ]);
-                    
+
                 }
                 else{
                     return response()->json([
@@ -69,7 +69,7 @@ class AuthController extends Controller
                         'msg' => 'Something went wrong!'
                     ]);
                 }
-                
+
             }
             else{
                 return response()->json([
@@ -77,9 +77,9 @@ class AuthController extends Controller
                     'msg' => 'Wrong password!'
                 ]);
             }
-            
 
-            
+
+
         }
         else{
             return response()->json([
@@ -87,51 +87,51 @@ class AuthController extends Controller
                 'msg' => 'Invalid Account!'
             ]);
         }
-        
+
     }
-    
+
     public function logout()
     {
         Auth::logout();
-        
+
         return redirect()->route('login');
     }
-    
+
     public function register()
     {
         // dd(session()->get('provider'));
         return view('auth.register');
     }
-    
+
     public function registerStep2()
     {
         $business_sectiors = BusinessSector::all();
-        
+
         // dd(session()->get('provider'));
         return view('auth.register-step2', get_defined_vars());
     }
-    
+
     public function getSubSectors($id)
     {
         $sub_sectiors = BusinessSubSector::where('sector_id', $id)->get();
-        
+
         return response()->json([
             'status' => true,
             'data' => $sub_sectiors
         ]);
-        
+
     }
-    
+
     public function registerStep3()
     {
         // dd(session()->get('provider'));
         return view('auth.register-step3');
     }
-    
+
     public function registerUserSession(Request $request)
     {
         $provider = session()->get('provider');
-        
+
         if(isset($provider) && $provider != null)
         {
             $user = [
@@ -145,7 +145,7 @@ class AuthController extends Controller
                 'address' => isset($request->address) ? $request->address : $provider['address'],
                 'password' => isset($request->password) ? $request->password : $provider['password'],
             ];
-            
+
         }
         else{
             $user = [
@@ -160,10 +160,10 @@ class AuthController extends Controller
                 'password' => $request->password
             ];
         }
-        
+
         if($request->is_submit == 1)
         {
-            
+
             $user = new User();
             $user->name =  $provider['first_name'] . ' '. $provider['last_name'];
             $user->email =  $provider['email'];
@@ -175,26 +175,26 @@ class AuthController extends Controller
             $user->dob = $provider['dob'];
             $user->address = $provider['address'];
             $user->save();
-            
+
             $credentials = [
                 'email' => $provider['email'],
                 'password' => $request['password'],
             ];
-            
+
             Auth::attempt($credentials);
-        
+
             session()->put('provider', null);
-               
-            return true;   
+
+            return true;
             // return redirect()->route('dashboard');
         }
-        
+
         session()->put('provider', $user);
-        
+
         return true;
-        
+
     }
-    
+
     public function registerStore(Request $request)
     {
         $provider = session()->get('provider');
@@ -206,10 +206,10 @@ class AuthController extends Controller
         $user->business_name =  $provider['business_name'];
         $user->password =  Hash::make($provider['password']);
         $user->save();
-        
+
         return redirect()->route('dashboard');
-        
+
     }
-    
-    
+
+
 }

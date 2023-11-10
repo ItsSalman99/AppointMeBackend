@@ -37,6 +37,8 @@ Route::post('/dashboard/updateScheduleDays', [ScheduleController::class , 'updat
 
 Route::get('/dashboard/calendar', [DashboardController::class , 'calendar'])->name('dashboard.calendar');
 Route::get('/dashboard/inbox', [DashboardController::class , 'inbox'])->name('dashboard.inbox');
+Route::get('/dashboard/reports', [DashboardController::class , 'reports'])->name('dashboard.reports');
+Route::get('/dashboard/subscription', [DashboardController::class , 'subscription'])->name('dashboard.subscription');
 
 Route::get('/dashboard/clients', [ClientController::class , 'index'])->name('dashboard.clients');
 

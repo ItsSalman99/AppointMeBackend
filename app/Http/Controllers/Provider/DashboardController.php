@@ -38,4 +38,18 @@ class DashboardController extends Controller
         return view('provider.inbox');
     }
 
+    public function reports()
+    {
+        // dd(Auth::user());
+
+        return view('provider.reports');
+    }
+
+    public function subscription()
+    {
+        // dd(Auth::user());
+
+        return view('provider.subscription');
+    }
+
 }

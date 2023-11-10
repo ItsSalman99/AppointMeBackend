@@ -78,7 +78,7 @@
                                     <!--</a>-->
                                 </nav>
                             </div>
-                            <a class="nav-link <?php if(strpos($_SERVER['REQUEST_URI'], 'reports.php') !== false) echo 'active'; ?>" href="reports.php">
+                            <a class="nav-link <?php if(strpos($_SERVER['REQUEST_URI'], 'reports.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.reports') }}">
                                 <div class="sb-nav-link-icon"><i class="bi bi-file font-20px"></i></div>
                                 Reports
                             </a>
@@ -98,7 +98,7 @@
                                 </nav>
                             </div> -->
 
-                            <a class="nav-link <?php if(strpos($_SERVER['REQUEST_URI'], 'subscription.php') !== false) echo 'active'; ?>" href="subscription.php">
+                            <a class="nav-link <?php if(strpos($_SERVER['REQUEST_URI'], 'subscription.php') !== false) echo 'active'; ?>" href="{{ route('dashboard.subscription') }}">
                                 <div class="sb-nav-link-icon"><i class="bi bi-bookmark-star-fill font-20px"></i></div>
                                 Subscription
                             </a>

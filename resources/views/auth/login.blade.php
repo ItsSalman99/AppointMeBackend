@@ -25,7 +25,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <label for="">Password</label>
-                                </div>    
+                                </div>
                                 <div>
                                     <a href="#." style="color: #04aeec;">Forgot Password?</a>
                                 </div>
@@ -61,11 +61,11 @@
 @push('extra-js')
     <script>
         $('#loginForm').on('submit', function(e){
-            
+
             e.preventDefault();
-            
+
             var formData = new FormData(this);
-            
+
             $.ajax({
                 url: "{{ route('login.authenticate') }}",
                 method: 'POST',
@@ -80,7 +80,7 @@
                           icon: 'success',
                           title: 'Logged in successfully!!'
                         })
-                        
+
                         window.location.href = "{{ route('dashboard') }}"
                     }
                     else{
@@ -91,7 +91,7 @@
                     }
                 }
             })
-            
+
         })
     </script>
 @endpush

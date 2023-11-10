@@ -67,7 +67,7 @@
         <div class="card-body">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Change Password</a>
+                    <a class="nav-link" aria-current="page" href="#">Schedule</a>
                 </li>
             </ul>
             <div class="p-4">
