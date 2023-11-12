@@ -8,7 +8,7 @@
     </style>
     <div class="cover-all-content">
         <div class="page-title d-flex align-items-center justify-content-between gap-3 flex-wrap">
-            <h2 class="mb-0 fw-600 font-27px">Providers</h2>
+            <h2 class="mb-0 fw-600 font-27px">Customers</h2>
         </div>
         <br>
         <br>
@@ -24,26 +24,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($providers as $i => $provider)
+                    @foreach ($customers as $i => $customer)
                         <tr>
                             <td class="fw-500">#<?php echo $i; ?></td>
                             <td style="max-width: 250px">
                                 <div class=" d-flex align-items-center gap-2">
                                     <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
-                                        <img src="{{$provider->profile_img}}"
+                                        <img src="{{$customer->profile_img}}"
                                             alt="">
                                     </div>
                                     <div style="width: 150px;">
-                                        <a href="#" data-bs-toggle="tooltip" data-bs-title="{{$provider->name}}"
+                                        <a href="#" data-bs-toggle="tooltip" data-bs-title="{{$customer->name}}"
                                             class=" font-14px m-0 text-truncate text-dark hover-opacity-07">
-                                            {{$provider->name}}
+                                            {{$customer->name}}
                                         </a>
 
                                     </div>
                                 </div>
                             </td>
-                            <td>{{$provider->email }}</td>
-                            <td>{{$provider->phone}}</td>
+                            <td>{{$customer->email }}</td>
+                            <td>{{$customer->phone}}</td>
                             <td class="text-center">
                                 <ul class="dropdownStyle-v1 position-absolute">
                                     <li class="dropdown tableDropdown">
@@ -53,7 +53,7 @@
                                                 class="bi bi-three-dots-vertical font-19px link-dark"></i></a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                             <li>
-                                                <a href="#." class="dropdown-item">View Details</a>
+                                                <a href="{{ route('admin.dashboard.showCustomers', ['id' => $customer->id]) }}" class="dropdown-item">View Details</a>
                                             </li>
                                         </ul>
                                     </li>

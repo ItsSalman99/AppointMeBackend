@@ -34,8 +34,12 @@
                                 Dashboard
                             </a>
                             <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'home.php') !== false) echo 'active'; ?>" href="{{ route('admin.dashboard.providers') }}">
-                                <div class="sb-nav-link-icon"><i class="bi bi-grid-1x2-fill font-20px"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-people-fill font-20px"></i></div>
                                 Providers
+                            </a>
+                            <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'home.php') !== false) echo 'active'; ?>" href="{{ route('admin.dashboard.customers') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-people font-20px"></i></div>
+                                Customers
                             </a>
                         </div>
 

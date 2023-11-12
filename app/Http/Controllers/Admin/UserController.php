@@ -17,4 +17,20 @@ class UserController extends Controller
 
     }
 
+    public function customers()
+    {
+        $customers = User::where('user_role', 'customer')->get();
+
+        return view('admin.users.customers', get_defined_vars());
+
+    }
+    
+    public function showCustomers($id)
+    {
+        $customer = User::where('id', $id)->first();
+
+        return view('admin.users.customer-details', get_defined_vars());
+
+    }
+
 }
