@@ -44,6 +44,7 @@ Route::get('/dashboard/clients', [ClientController::class , 'index'])->name('das
 
 Route::get('/dashboard/bookings', [BookingController::class , 'index'])->name('dashboard.bookings.index');
 Route::get('/dashboard/bookings/scheduled/{id}', [BookingController::class , 'scheduleBooking'])->name('dashboard.bookings.scheduled');
+Route::get('/dashboard/bookings/cancelled/{id}', [BookingController::class , 'cancelBooking'])->name('dashboard.bookings.cancelled');
 
 Route::get('/dashboard/settigs/services', [ServiceController::class , 'index'])->name('dashboard.settings.services');
 Route::post('/dashboard/settigs/services/store', [ServiceController::class , 'store'])->name('dashboard.settings.services.store');

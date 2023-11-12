@@ -47,11 +47,27 @@
                             <span>{{ date('F, j Y', strtotime($booking->created_at)) }}</span>
                         </div>
                         <div>
-                            <a href="#" onclick="scheduledBooking({{$booking->id}})">
+                            <a href="#">
                                 <div class="active-status">
                                     <p>{{ $booking->status }}</p>
                                 </div>
                             </a>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <div>
+                                <a href="#"
+                                    class="btn btn-sm btn-success {{ $booking->status != 'pending' ? 'disabled' : '' }}"
+                                    onclick="scheduledBooking({{ $booking->id }})">
+                                    <i class="bi bi-check2-all"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="#"
+                                    class="btn btn-sm btn-danger {{ $booking->status != 'pending' ? 'disabled' : '' }}"
+                                    onclick="cancelBooking({{ $booking->id }})">
+                                    <i class="bi bi-x-octagon-fill"></i>
+                                </a>
+                            </div>
                         </div>
                         <div>
                             <a href="#." class="btn rounded-circle"
@@ -67,13 +83,11 @@
 
     @push('extra-js')
         <script>
-
-            function scheduledBooking(id)
-            {
+            function scheduledBooking(id) {
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You want to complete this!",
+                    text: "You want to accept this!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -81,7 +95,41 @@
                     confirmButtonText: 'Yes!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/dashboard/bookings/scheduled/'+ id
+                        window.location.href = '/dashboard/bookings/scheduled/' + id
+                    }
+                })
+            }
+
+            function cancelBooking(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to cancel this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/dashboard/bookings/cancelled/' + id,
+                            method: 'GET',
+                            success: function(response) {
+                                if (response.status == true) {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: response.msg
+                                    })
+
+                                    location.reload();
+                                } else {
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: response.msg
+                                    })
+                                }
+                            }
+                        })
                     }
                 })
             }

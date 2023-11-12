@@ -110,8 +110,17 @@ class BookingController extends Controller
             ->where('id',$request->booking_id)
             ->with('user', 'provider', 'service', 'service_type.service_type')->first();
 
+
             if($booking)
             {
+                if($booking->status != 'pending')
+                {
+                    return response()->json([
+                        'status' =>  false,
+                        'msg' => 'This booking can not cancelled!'
+                    ]);
+                }
+
                 $booking->status = 'cancelled';
                 $booking->cancel_reason = $request->cancel_reason;
                 $booking->save();
