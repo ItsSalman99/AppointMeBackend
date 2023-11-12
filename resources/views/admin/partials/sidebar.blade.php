@@ -41,6 +41,10 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-people font-20px"></i></div>
                                 Customers
                             </a>
+                            <a class="nav-link <?php if (strpos($_SERVER['REQUEST_URI'], 'home.php') !== false) echo 'active'; ?>" href="{{ route('admin.dashboard.bookings') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-cash font-20px"></i></div>
+                                Bookings
+                            </a>
                         </div>
 
                     </div>
