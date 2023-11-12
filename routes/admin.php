@@ -15,6 +15,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/dashboard', [DashBoardController::class, 'index'])->name('admin.dashboard');
     Route::get('/dashboard/providers', [UserController::class, 'providers'])->name('admin.dashboard.providers');
+    Route::get('/dashboard/providers/{id}', [UserController::class, 'showProviders'])->name('admin.dashboard.showProviders');
     Route::get('/dashboard/customers', [UserController::class, 'customers'])->name('admin.dashboard.customers');
     Route::get('/dashboard/customers/{id}', [UserController::class, 'showCustomers'])->name('admin.dashboard.showCustomers');
 

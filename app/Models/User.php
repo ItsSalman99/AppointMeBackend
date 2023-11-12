@@ -63,12 +63,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    
+
     public function business_sub_sector()
     {
         return $this->belongsTo(BusinessSubSector::class, 'sub_sector_id', 'id');
     }
-    
+
     public function services()
     {
         return $this->hasMany(Service::class, 'user_id', 'id');
@@ -77,6 +77,16 @@ class User extends Authenticatable implements JWTSubject
     public function provider_schedule()
     {
         return $this->hasMany(ProviderSchedule::class, 'user_id', 'id');
+    }
+
+    public function customer_bookings()
+    {
+        return $this->hasMany(ServiceBooking::class, 'user_id', 'id');
+    }
+
+    public function provider_bookings()
+    {
+        return $this->hasMany(ServiceBooking::class, 'provider_id', 'id');
     }
 
 }

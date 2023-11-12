@@ -17,6 +17,14 @@ class UserController extends Controller
 
     }
 
+    public function showProviders($id)
+    {
+        $provider = User::where('id', $id)->first();
+
+        return view('admin.users.provider-details', get_defined_vars());
+
+    }
+
     public function customers()
     {
         $customers = User::where('user_role', 'customer')->get();
@@ -24,7 +32,7 @@ class UserController extends Controller
         return view('admin.users.customers', get_defined_vars());
 
     }
-    
+
     public function showCustomers($id)
     {
         $customer = User::where('id', $id)->first();

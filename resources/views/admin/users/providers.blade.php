@@ -53,7 +53,7 @@
                                                 class="bi bi-three-dots-vertical font-19px link-dark"></i></a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                             <li>
-                                                <a href="#." class="dropdown-item">View Details</a>
+                                                <a href="{{ route('admin.dashboard.showProviders', ['id'=>$provider->id]) }}" class="dropdown-item">View Details</a>
                                             </li>
                                         </ul>
                                     </li>
