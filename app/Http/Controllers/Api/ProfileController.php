@@ -25,8 +25,7 @@ class ProfileController extends Controller
         ]);
 
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'msg' => $validator->errors()->first()
@@ -37,10 +36,10 @@ class ProfileController extends Controller
 
         try {
 
-            $user = User::where('token', $token)->first();
+            $user = User::where('token', '!=', NULL)->where('token', $token)
+            ->where('user_role', 'customer')->first();
 
-            if($user)
-            {
+            if ($user) {
                 $address = new CustomerAddress();
 
                 $address->user_id = $user->id;
@@ -55,28 +54,72 @@ class ProfileController extends Controller
 
 
                 $user = User::where('id', $user->id)
-                ->with('customer_addresses')->first();
+                    ->with('customer_addresses')->first();
 
                 return response()->json([
                     'status' => true,
                     'data' => $user
                 ]);
-
-            }
-            else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'msg' => 'unauthenticated!'
                 ]);
             }
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
                 'msg' => $th->getMessage()
             ]);
         }
-
     }
 
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'dob' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'msg' => $validator->errors()->first()
+            ]);
+        }
+
+        $token = $request->bearerToken();
+
+        try {
+
+            $user = User::where('token', '!=', NULL)->where('token', $token)
+                ->where('user_role', 'customer')->first();
+
+            if ($user) {
+
+                $user->name = isset($request->name) ? $request->name : $user->name;
+                $user->dob = isset($request->dob) ? $request->dob : $user->dob;
+                $user->save();
+
+                $user = User::where('id', $user->id)
+                    ->with('customer_addresses')->first();
+
+                return response()->json([
+                    'status' => true,
+                    'data' => $user
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'unauthenticated!'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'msg' => $th->getMessage()
+            ]);
+        }
+    }
 }

@@ -39,6 +39,7 @@ Route::prefix('user')->middleware([
 
     Route::prefix('profile')->group(function () {
         Route::post('addAddress', [ProfileController::class, 'addAddress']);
+        Route::post('update', [ProfileController::class, 'update']);
     });
 
 });

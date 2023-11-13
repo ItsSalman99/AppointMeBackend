@@ -90,6 +90,7 @@ class AuthController extends Controller
         try {
 
             $user = User::where('email', $request->email)
+            ->where('user_role', 'customer')
             ->with('customer_addresses')->first();
 
             if ($user) {
@@ -138,6 +139,7 @@ class AuthController extends Controller
         try {
 
             $user = User::where('token', '!=', NULL)->where('token', $token)
+            ->where('user_role', 'customer')
             ->with('customer_addresses')->first();
 
             if ($user) {
