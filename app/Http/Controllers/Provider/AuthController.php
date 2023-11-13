@@ -191,7 +191,6 @@ class AuthController extends Controller
                 '18:00',
                 '18:00',
                 '18:00',
-                // Add more slots as needed
             ];
 
             // dd($days);
@@ -205,8 +204,6 @@ class AuthController extends Controller
                 $provider->close_time = $close_time[$key];
                 $provider->save();
             }
-
-
 
             Auth::attempt($credentials);
 
