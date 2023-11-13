@@ -32,8 +32,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'msg' => $validator->errors()->first()
@@ -42,11 +41,9 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->where('user_role', 'provider')->first();
 
-        if($user && $user->user_role == 'provider')
-        {
-            if(Hash::check($request->password, $user->password))
-            {
-                 $credentials = [
+        if ($user && $user->user_role == 'provider') {
+            if (Hash::check($request->password, $user->password)) {
+                $credentials = [
                     'email' => $request->email,
                     'password' => $request->password,
                 ];
@@ -56,39 +53,29 @@ class AuthController extends Controller
                 $auth = auth()->attempt($credentials);
                 // dd($auth);
 
-                if($auth)
-                {
+                if ($auth) {
                     return response()->json([
                         'status' => true,
                         'msg' => 'Logged in successful!'
                     ]);
-
-                }
-                else{
+                } else {
                     return response()->json([
                         'status' => false,
                         'msg' => 'Something went wrong!'
                     ]);
                 }
-
-            }
-            else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'msg' => 'Wrong password!'
                 ]);
             }
-
-
-
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => false,
                 'msg' => 'Invalid Account!'
             ]);
         }
-
     }
 
     public function logout()
@@ -120,7 +107,6 @@ class AuthController extends Controller
             'status' => true,
             'data' => $sub_sectiors
         ]);
-
     }
 
     public function registerStep3()
@@ -133,8 +119,7 @@ class AuthController extends Controller
     {
         $provider = session()->get('provider');
 
-        if(isset($provider) && $provider != null)
-        {
+        if (isset($provider) && $provider != null) {
             $user = [
                 'first_name' => isset($request->first_name) ? $request->first_name : $provider['first_name'],
                 'last_name' => isset($request->last_name) ? $request->last_name : $provider['last_name'],
@@ -146,9 +131,7 @@ class AuthController extends Controller
                 'address' => isset($request->address) ? $request->address : $provider['address'],
                 'password' => isset($request->password) ? $request->password : $provider['password'],
             ];
-
-        }
-        else{
+        } else {
             $user = [
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -162,11 +145,10 @@ class AuthController extends Controller
             ];
         }
 
-        if($request->is_submit == 1)
-        {
+        if ($request->is_submit == 1) {
 
             $user = new User();
-            $user->name =  $provider['first_name'] . ' '. $provider['last_name'];
+            $user->name =  $provider['first_name'] . ' ' . $provider['last_name'];
             $user->email =  $provider['email'];
             $user->phone =  $provider['phone'];
             $user->business_name =  $provider['business_name'];
@@ -182,6 +164,50 @@ class AuthController extends Controller
                 'password' => $request['password'],
             ];
 
+
+            $days = [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday',
+            ];
+            $open_time = [
+                '09:00',
+                '09:00',
+                '09:00',
+                '09:00',
+                '09:00',
+                '09:00',
+                '09:00',
+            ];
+            $close_time = [
+                '18:00',
+                '18:00',
+                '18:00',
+                '18:00',
+                '18:00',
+                '18:00',
+                '18:00',
+                // Add more slots as needed
+            ];
+
+            // dd($days);
+            foreach ($days as $key => $day) {
+                // dd($close_time[$key]);
+                $provider = new ProviderSchedule();
+
+                $provider->user_id = $user->id;
+                $provider->name = $day;
+                $provider->open_time = $open_time[$key];
+                $provider->close_time = $close_time[$key];
+                $provider->save();
+            }
+
+
+
             Auth::attempt($credentials);
 
             session()->put('provider', null);
@@ -190,10 +216,10 @@ class AuthController extends Controller
             // return redirect()->route('dashboard');
         }
 
+
         session()->put('provider', $user);
 
         return true;
-
     }
 
     public function registerStore(Request $request)
@@ -201,68 +227,13 @@ class AuthController extends Controller
         $provider = session()->get('provider');
 
         $user = new User();
-        $user->name =  $provider['first_name'] . ' '. $provider['last_name'];
+        $user->name =  $provider['first_name'] . ' ' . $provider['last_name'];
         $user->email =  $provider['email'];
         $user->phone =  $provider['phone'];
         $user->business_name =  $provider['business_name'];
         $user->password =  Hash::make($provider['password']);
         $user->save();
 
-        $days = [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-        ];
-
-        $days = [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-        ];
-        $open_time = [
-            '09:00 AM',
-            '10:00 AM',
-            '11:00 AM',
-            '12:00 AM',
-            '01:00 PM',
-            '02:00 PM',
-            '03:00 PM',
-        ];
-        $close_time = [
-            '10:00 AM',
-            '11:00 AM',
-            '12:00 AM',
-            '01:00 PM',
-            '02:00 PM',
-            '03:00 PM',
-            '04:00 PM',
-            '05:00 PM',
-            '06:00 PM',
-            // Add more slots as needed
-        ];
-
-        foreach ($days as $key => $day) {
-            $provider = new ProviderSchedule();
-
-            $provider->user_id = $user->id;
-            $provider->name = $day;
-            $provider->open_time = $open_time[$key];
-            $provider->close_time = $close_time[$key];
-            $provider->save();
-        }
-
-
         return redirect()->route('dashboard');
-
     }
-
-
 }
