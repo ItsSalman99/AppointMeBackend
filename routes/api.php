@@ -38,7 +38,7 @@ Route::prefix('user')->middleware([
     Route::post('resetpassword', [ForgetPasswordController::class, 'resetPassword']);
 
     Route::prefix('profile')->group(function () {
-        Route::post('addAddress', [ProfileController::class, 'getaddAddress']);
+        Route::post('addAddress', [ProfileController::class, 'addAddress']);
     });
 
 });
