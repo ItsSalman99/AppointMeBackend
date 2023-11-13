@@ -56,6 +56,9 @@ class AuthController extends Controller
                 $user->save();
             }
 
+            $user = User::where('id', $user->id)
+            ->with('customer_addresses')->first();
+
             return response()->json([
                 'status' => true,
                 'data' => $user
@@ -86,7 +89,8 @@ class AuthController extends Controller
 
         try {
 
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)
+            ->with('customer_addresses')->first();
 
             if ($user) {
                 $credentials = ['email' => $request->email, 'password' => $request->password];
@@ -126,14 +130,15 @@ class AuthController extends Controller
             ]);
         }
     }
-    
+
     public function getLogin()
     {
         $token = request()->bearerToken();
-        
+
         try {
 
-            $user = User::where('token', '!=', NULL)->where('token', $token)->first();
+            $user = User::where('token', '!=', NULL)->where('token', $token)
+            ->with('customer_addresses')->first();
 
             if ($user) {
                 return response()->json([
@@ -153,20 +158,20 @@ class AuthController extends Controller
             ]);
         }
     }
-    
+
     public function logout()
     {
         $token = request()->bearerToken();
-        
+
         try {
 
             $user = User::where('token', '!=', NULL)->where('token', $token)->first();
 
             if ($user) {
-                
+
                 $user->fcm_token = NULL;
                 $user->save();
-                
+
                 return response()->json([
                     'status' => true,
                     'data' => $user
@@ -184,7 +189,7 @@ class AuthController extends Controller
             ]);
         }
     }
-    
+
     public function sendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -197,19 +202,19 @@ class AuthController extends Controller
                 'msg' => $validator->errors()->first()
             ]);
         }
-        
+
         $otp = mt_rand(111111,999999);
-        
+
         $data = [
             'title' => 'Email Verification',
             'body' => 'Please verify your email by using the given below otp',
             'otp' => $otp
         ];
-        
+
         Mail::to($request->email)->send(new OtpVerification($data));
-        
+
         $user = DB::select('select * from password_resets where email = ?', [$request->email]);
-        
+
         if($user)
         {
             DB::table('password_resets')->where('email', $request->email)->delete();
@@ -224,17 +229,17 @@ class AuthController extends Controller
                 'token' => $otp
             ]);
         }
-        
+
 
         return response()->json([
             'status' => true,
             'msg' => $otp
         ]);
-            
-        
+
+
     }
-    
-        
+
+
     public function checkOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -248,10 +253,10 @@ class AuthController extends Controller
                 'msg' => $validator->errors()->first()
             ]);
         }
-        
-        
+
+
         $user = DB::table('password_resets')->where('email', $request->email)->first();
-        
+
         if($user)
         {
             if($user->token == $request->otp)
@@ -272,7 +277,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'msg' => 'Not Found!'
-            ]);   
+            ]);
         }
     }
 }
