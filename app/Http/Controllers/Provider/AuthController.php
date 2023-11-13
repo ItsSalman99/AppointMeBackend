@@ -156,6 +156,8 @@ class AuthController extends Controller
             $user->user_role = 'provider';
             $user->sub_sector_id = $provider['business_sub_sector'];
             $user->dob = $provider['dob'];
+            $user->latitude = '50.915058';
+            $user->longitude = '8.107266';
             $user->address = $provider['address'];
             $user->save();
 
