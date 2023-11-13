@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\BusinessSector;
 use App\Models\BusinessSubSector;
+use App\Models\ProviderSchedule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -206,6 +207,58 @@ class AuthController extends Controller
         $user->business_name =  $provider['business_name'];
         $user->password =  Hash::make($provider['password']);
         $user->save();
+
+        $days = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ];
+
+        $days = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ];
+        $open_time = [
+            '09:00 AM',
+            '10:00 AM',
+            '11:00 AM',
+            '12:00 AM',
+            '01:00 PM',
+            '02:00 PM',
+            '03:00 PM',
+        ];
+        $close_time = [
+            '10:00 AM',
+            '11:00 AM',
+            '12:00 AM',
+            '01:00 PM',
+            '02:00 PM',
+            '03:00 PM',
+            '04:00 PM',
+            '05:00 PM',
+            '06:00 PM',
+            // Add more slots as needed
+        ];
+
+        foreach ($days as $key => $day) {
+            $provider = new ProviderSchedule();
+
+            $provider->user_id = $user->id;
+            $provider->name = $day;
+            $provider->open_time = $open_time[$key];
+            $provider->close_time = $close_time[$key];
+            $provider->save();
+        }
+
 
         return redirect()->route('dashboard');
 
