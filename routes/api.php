@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\ServicesController;
 use App\Http\Controllers\Api\ForgetPasswordController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SlotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +32,14 @@ Route::prefix('user')->middleware([
 
     Route::post('sendOtp', [AuthController::class, 'sendOtp']);
     Route::post('checkOtp', [AuthController::class, 'checkOtp']);
-    
+
     Route::post('resetpassword/sendOtp', [ForgetPasswordController::class, 'sendOtp']);
     Route::post('resetpassword/checkOtp', [ForgetPasswordController::class, 'checkOtp']);
     Route::post('resetpassword', [ForgetPasswordController::class, 'resetPassword']);
-    
+
+    Route::prefix('profile')->group(function () {
+        Route::post('addAddress', [ProfileController::class, 'getaddAddressAll']);
+    });
 
 });
 
@@ -45,14 +49,12 @@ Route::prefix('services')->group(function () {
     Route::get('providers/getAll', [ServicesController::class, 'getProviders']);
     Route::get('providers/getSingle/{id}', [ServicesController::class, 'getSingleProviders']);
     Route::get('types/getAll', [ServicesController::class, 'getServiceTypes']);
-
 });
 
 
 Route::prefix('slots')->group(function () {
 
     Route::post('get', [SlotController::class, 'getSlots']);
-
 });
 
 
@@ -63,5 +65,4 @@ Route::prefix('bookings')->group(function () {
     Route::get('getDetails/{id}', [BookingController::class, 'getDetails']);
     Route::post('cancel', [BookingController::class, 'cancelBooking']);
     Route::post('add', [BookingController::class, 'store']);
-
 });
