@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\FavouriteProviderController;
 use App\Http\Controllers\Api\ServicesController;
 use App\Http\Controllers\Api\ForgetPasswordController;
 use App\Http\Controllers\Api\ProfileController;
@@ -41,6 +42,11 @@ Route::prefix('user')->middleware([
         Route::post('addAddress', [ProfileController::class, 'addAddress']);
         Route::post('update', [ProfileController::class, 'update']);
         Route::post('change-password', [ProfileController::class, 'changePassword']);
+    });
+
+    Route::prefix('favourite')->group(function () {
+        Route::get('/providers/getAll', [FavouriteProviderController::class, 'getAll']);
+        Route::post('/providers/add', [FavouriteProviderController::class, 'store']);
     });
 
 });
