@@ -58,6 +58,15 @@ class FavouriteProviderController extends Controller
 
             if ($user) {
 
+                $check = User::where('id', $request->provider_id)->where('user_role', 'provider')->first();
+
+                if (!$check) {
+                    return response()->json([
+                        'status' => false,
+                        'msg' => 'Invalid Provider ID!'
+                    ]);
+                }
+
                 $favourite = new CustomerFavouriteProvider();
                 $favourite->user_id = $user->id;
                 $favourite->provider_id = $request->provider_id;
