@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomerAddress;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -52,6 +53,53 @@ class ProfileController extends Controller
                 $address->zip_code = $request->zip_code;
                 $address->save();
 
+
+                $user = User::where('id', $user->id)
+                    ->with('customer_addresses')->first();
+
+                return response()->json([
+                    'status' => true,
+                    'data' => $user
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'unauthenticated!'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'msg' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'msg' => $validator->errors()->first()
+            ]);
+        }
+
+        $token = $request->bearerToken();
+
+        try {
+
+            $user = User::where('token', '!=', NULL)->where('token', $token)
+                ->where('user_role', 'customer')->first();
+
+            if ($user) {
+
+                $user->password = Hash::make($request->password);
+                $user->save();
 
                 $user = User::where('id', $user->id)
                     ->with('customer_addresses')->first();
@@ -122,4 +170,5 @@ class ProfileController extends Controller
             ]);
         }
     }
+
 }
